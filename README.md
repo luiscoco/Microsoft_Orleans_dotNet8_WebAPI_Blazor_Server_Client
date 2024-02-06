@@ -182,6 +182,56 @@ namespace OrleansWebAPIServer.GrainsIntefaces
 
 ### 1.4. Create the Grains (HelloGrain.cs)
 
+This code snippet is an implementation of a grain class for use with the Orleans framework, a distributed system framework that simplifies the development of scalable, fault-tolerant applications in .NET
+
+Let's break down the key components of this code:
+
+**Namespaces and Directives**:
+
+The code starts with using directives, which import namespaces containing classes and other resources that the HelloGrain class depends on
+
+These namespaces provide functionality for logging (Microsoft.Extensions.Logging), working with the Orleans framework (Orleans), and other base .NET functionality (System, etc.)
+
+**Namespace Declaration**:
+
+The HelloGrain class is defined within the OrleansWebAPIServer.Grains namespace, which logically organizes this class alongside potentially other grain classes and related types within the OrleansWebAPIServer project
+
+**Class Definition**:
+
+HelloGrain is a public class that inherits from Grain and implements the IHello interface
+
+Inheriting from Grain makes HelloGrain an Orleans grain, which is a fundamental building block in Orleans for building distributed applications
+
+The IHello interface defines the contract that this grain must adhere to, likely specifying a method for receiving a greeting
+
+
+**Logger Field**:
+
+A private readonly field _logger of type ILogger is declared, which is used for logging
+
+This logger is specific to the HelloGrain class, as indicated by the generic parameter ILogger<HelloGrain> in its constructor
+
+
+**Constructor**:
+
+The HelloGrain class has a constructor that takes an ILogger<HelloGrain> parameter
+
+his logger is provided via dependency injection when the grain is instantiated, enabling the class to log information
+
+**SayHello Method**:
+
+SayHello is an asynchronous method returning a ValueTask<string>
+
+This method takes a string parameter greeting, logs a message including the greeting, and then returns a greeting message from the HelloGrain
+
+The use of ValueTask indicates an optimization for scenarios where the method may complete synchronously, which can be common in high-performance applications
+
+The log message is structured, using a template that includes the greeting in the output. This structured logging is beneficial for later searching or analyzing log data
+
+The response string uses an interpolated verbatim string literal (signified by $""" and """), allowing for easy inclusion of the greeting in a potentially multi-line response format
+
+Overall, this HelloGrain class demonstrates a simple Orleans grain implementation that logs incoming messages and responds with a greeting, showcasing basic concepts of Orleans such as grains, logging, and asynchronous method patterns
+
 ```csharp
 ﻿using OrleansWebAPIServer.GrainsIntefaces;
 using Microsoft.Extensions.Logging;
