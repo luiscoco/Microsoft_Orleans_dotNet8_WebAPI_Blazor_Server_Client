@@ -641,6 +641,20 @@ This class follows the principle of keeping data models simple and focused on re
 ```
 ### 2.5.  Modify the navigation menu (NavMenu.razor)
 
+We add a new item in the left hand side menu for accessin the Hello.razor page
+
+This is the code we add:
+
+```razor
+ <div class="nav-item px-3">
+            <NavLink class="nav-link" href="hello">
+                <span class="bi bi-plus-square-fill-nav-menu" aria-hidden="true"></span> Hello
+            </NavLink>
+        </div>
+```
+
+This is the **NavMenu.razor** whole code
+
 ```razor
 ﻿<div class="top-row ps-3 navbar navbar-dark">
     <div class="container-fluid">
