@@ -535,7 +535,7 @@ It showcases various Blazor concepts such as routing, dependency injection, data
 
 **User Interface**:
 
-The component displays a static heading (<h1>Say Hello</h1>)
+The component displays a static heading ```<h1>Say Hello</h1>```
 
 It includes an <input> element bound to a greeting variable, allowing the user to enter a greeting. The @bind directive creates a two-way binding between the input field and the greeting variable
 
