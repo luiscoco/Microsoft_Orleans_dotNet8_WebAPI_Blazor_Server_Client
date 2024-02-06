@@ -83,17 +83,19 @@ catch (Exception ex)
 }
 ```
 
-### 1.2. Load the project dependencies
+### 1.2. Load the project dependencies (OrleansWebAPIServer.csproj)
 
 ```
- <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.1" />
-<PackageReference Include="Microsoft.Orleans.Core" Version="8.0.0" />
-<PackageReference Include="Microsoft.Orleans.Core.Abstractions" Version="8.0.0" />
-<PackageReference Include="Microsoft.Orleans.Server" Version="8.0.0" />
-<PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+<ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.1" />
+    <PackageReference Include="Microsoft.Orleans.Core" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Orleans.Core.Abstractions" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Orleans.Server" Version="8.0.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+ </ItemGroup>
 ```
 
-### 1.3. Create the Grain Interfaces
+### 1.3. Create the Grain Interfaces (IHello.cs)
 
 ```csharp
 ﻿using Orleans;
@@ -112,8 +114,7 @@ namespace OrleansWebAPIServer.GrainsIntefaces
 }
 ```
 
-
-### 1.4. Create the Grains
+### 1.4. Create the Grains (HelloGrain.cs)
 
 ```csharp
 ﻿using OrleansWebAPIServer.GrainsIntefaces;
@@ -150,16 +151,57 @@ namespace OrleansWebAPIServer.Grains
 }
 ```
 
-### 1.5. Create the Models
+### 1.5. Create the Models (HelloModel.cs)
 
 ```csharp
+﻿using System.ComponentModel.DataAnnotations;
 
+namespace OrleansWebAPIServer.Models
+{
+    public class GreetingRequest
+    {
+        [Required]
+        public string Greeting { get; set; }
+    }
+}
 ```
 
-### 1.6. Create the Controllers
+### 1.6. Create the Controllers (HelloController.cs)
 
 ```csharp
+﻿using Microsoft.AspNetCore.Mvc;
+using Orleans;
+using OrleansWebAPIServer.GrainsIntefaces;
+using OrleansWebAPIServer.Models;
+using System.Threading.Tasks;
 
+namespace OrleansWebAPIServer.Controllers
+{
+    [ApiController]
+    [Route("[controller]")]
+    public class HelloController : ControllerBase
+    {
+        private readonly IClusterClient _client;
+
+        public HelloController(IClusterClient client)
+        {
+            _client = client;
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> SayHello([FromQuery] GreetingRequest request)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var grain = _client.GetGrain<IHello>(0); // Use an appropriate grain key
+            var response = await grain.SayHello(request.Greeting);
+            return Ok(response);
+        }
+    }
+}
 ```
 
 
