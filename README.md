@@ -324,6 +324,62 @@ namespace OrleansWebAPIServer.Models
 
 ### 1.6. Create the Controllers (HelloController.cs)
 
+This code snippet defines a controller class named HelloController in an ASP.NET Core application that is integrated with the Orleans distributed application framework
+
+This controller is responsible for handling HTTP GET requests by invoking a method on an Orleans grain and returning its response. Let's break down the key components of this code:
+
+**Namespaces and Directives**:
+
+The code starts with using directives to include necessary namespaces for ASP.NET Core MVC functionality (Microsoft.AspNetCore.Mvc), Orleans client functionality (Orleans), the interface that defines grain contracts (OrleansWebAPIServer.GrainsIntefaces), and data models (OrleansWebAPIServer.Models)
+
+**Namespace Declaration**:
+
+The HelloController class is part of the OrleansWebAPIServer.Controllers namespace, which organizes it with other controller classes within the ASP.NET Core application
+
+**Class and Attributes**:
+
+HelloController inherits from ControllerBase, making it a controller class. It's decorated with [ApiController] and [Route("[controller]")] attributes
+
+The [ApiController] attribute denotes it as a controller with API-specific behavior (e.g., automatic model validation). The [Route("[controller]")] attribute sets up the routing to this controller, using the controller's name as the route path
+
+**Private Field**:
+
+A private readonly field _client of type IClusterClient is declared. This field represents the Orleans cluster client, which is used to communicate with grains in the Orleans cluster
+
+**Constructor**:
+
+The HelloController constructor accepts an IClusterClient instance via dependency injection and assigns it to the _client field
+
+This setup allows the controller to interact with Orleans grains
+
+**SayHello Action Method**:
+
+The SayHello method is an asynchronous action method that handles HTTP GET requests
+
+It is decorated with the [HttpGet] attribute to map GET requests to this method
+
+The method takes a GreetingRequest parameter, which is populated from the query string of the request ([FromQuery] attribute)
+
+This model contains the greeting message to be sent to the grain
+
+Inside the method, it first checks if the model state is valid (ModelState.IsValid)
+
+If not, it returns a bad request response (BadRequest(ModelState)), which includes validation errors
+
+It then retrieves a grain reference using _client.GetGrain<IHello>(0)
+
+The IHello interface represents the contract for the grain, and 0 is used as the grain's unique key. In a real application, you'd use an appropriate key based on your application's logic
+
+The SayHello method of the grain is called asynchronously with await, passing the greeting from the request
+
+The response from the grain is awaited and then returned as an HTTP 200 OK response (Ok(response)), containing the grain's reply.
+
+In summary, this controller provides an HTTP endpoint for a web API that processes greeting requests
+
+It validates the incoming request, interacts with an Orleans grain to perform some operation (in this case, saying hello), and returns the result
+
+This pattern illustrates how ASP.NET Core MVC controllers can be integrated with Orleans to expose grain functionality over HTTP
+
 ```csharp
 ﻿using Microsoft.AspNetCore.Mvc;
 using Orleans;
