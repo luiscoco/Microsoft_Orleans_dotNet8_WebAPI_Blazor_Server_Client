@@ -269,6 +269,46 @@ namespace OrleansWebAPIServer.Grains
 
 ### 1.5. Create the Models (HelloModel.cs)
 
+This code snippet defines a simple C# class named GreetingRequest within the OrleansWebAPIServer.Models namespace
+
+The purpose of this class is to represent a request model, specifically for operations that involve a greeting message
+
+Let's break down the key components of this code:
+
+**Namespace and Directive**:
+
+The using System.ComponentModel.DataAnnotations; directive is included at the top of the file
+
+This namespace contains classes that are used for defining metadata for ASP.NET Core model validation
+
+It's used here to import attributes that can be applied to model properties to specify validation requirements or describe schema
+
+**Namespace Declaration**:
+
+The GreetingRequest class is defined within the OrleansWebAPIServer.Models namespace. Namespaces are used in C# to organize and provide a level of separation for classes, interfaces, and other types
+
+**Class Definition**:
+
+GreetingRequest is defined as a public class, making it accessible from other parts of the application or potentially other applications that reference this assembly
+
+**Property Definition**:
+
+The class defines a single property named Greeting of type string. This property represents the greeting message that will be part of the request handled by the application
+
+**Data Annotations**:
+
+The [Required] attribute from the System.ComponentModel.DataAnnotations namespace is applied to the Greeting property
+
+This attribute indicates that the Greeting property is required; thus, it must have a value for the model to be considered valid
+
+This is particularly useful in scenarios where the model is being automatically validated by ASP.NET Core's model binding and validation features, such as in API request handling
+
+When a GreetingRequest object is instantiated and populated from an incoming request, the presence of the Greeting property will be enforced, and an error will be generated if it is missing
+
+In summary, the GreetingRequest class serves as a data transfer object (DTO) that defines the structure of a greeting request, including any validation rules that must be satisfied
+
+This class is a typical pattern in web applications for encapsulating data sent to and from the client, with the [Required] attribute ensuring that necessary data is present
+
 ```csharp
 ﻿using System.ComponentModel.DataAnnotations;
 
