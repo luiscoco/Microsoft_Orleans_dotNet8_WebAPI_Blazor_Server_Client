@@ -242,6 +242,130 @@ namespace BlazorOrleansClient.Services
 }
 ```
 
+### 2.2. Configure the middleware (program.cs)
+
+```csharp
+using Microsoft.AspNetCore.Components.Web;
+using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+using BlazorOrleansClient;
+using BlazorOrleansClient.Services;
+
+var builder = WebAssemblyHostBuilder.CreateDefault(args);
+builder.RootComponents.Add<App>("#app");
+builder.RootComponents.Add<HeadOutlet>("head::after");
+
+builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
+builder.Services.AddScoped<HelloService>();
+
+await builder.Build().RunAsync();
+```
+
+### 2.3. Create a new page (Hello.razor)
+
+```razor
+﻿@page "/hello"
+@inject BlazorOrleansClient.Services.HelloService HelloService
+<h1>Say Hello</h1>
+
+<div>
+    <input type="text" @bind="greeting" placeholder="Enter a greeting" />
+    <button @onclick="GetGreeting">Get Greeting</button>
+</div>
+
+@if (helloMessage != null)
+{
+    <p>@helloMessage.Message</p>
+}
+
+@code {
+    private string greeting;
+    private HelloModel helloMessage;
+
+    private async Task GetGreeting()
+    {
+        try
+        {
+            helloMessage = await HelloService.SayHello(greeting);
+        }
+        catch (System.Net.Http.HttpRequestException ex)
+        {
+            Console.WriteLine($"HTTPRequestException: {ex.Message}");
+            // Optionally, update the UI to reflect the error
+        }
+        catch (System.Text.Json.JsonException jsonEx)
+        {
+            Console.WriteLine($"JSON Parsing Error: {jsonEx.Message}");
+            // Optionally, update the UI to reflect the error
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"An unexpected error occurred: {ex.Message}");
+            // Optionally, update the UI to reflect the error
+        }
+    }
+}
+```
+
+### 2.4. Create Models (HelloModel.cs)
+
+```csharp
+﻿namespace BlazorOrleansClient.Models
+{
+    public class HelloModel
+    {
+        public string Message { get; set; }
+    }
+}
+```
+### 2.5.  Modify the navigation menu (NavMenu.razor)
+
+```razor
+﻿<div class="top-row ps-3 navbar navbar-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="">BlazorOrleansClient</a>
+        <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </div>
+</div>
+
+<div class="@NavMenuCssClass nav-scrollable" @onclick="ToggleNavMenu">
+    <nav class="flex-column">
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+                <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> Home
+            </NavLink>
+        </div>
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="counter">
+                <span class="bi bi-plus-square-fill-nav-menu" aria-hidden="true"></span> Counter
+            </NavLink>
+        </div>
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="hello">
+                <span class="bi bi-plus-square-fill-nav-menu" aria-hidden="true"></span> Hello
+            </NavLink>
+        </div>
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="weather">
+                <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Weather
+            </NavLink>
+        </div>
+    </nav>
+</div>
+
+@code {
+    private bool collapseNavMenu = true;
+
+    private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+
+    private void ToggleNavMenu()
+    {
+        collapseNavMenu = !collapseNavMenu;
+    }
+}
+```
+
 ## 3. Run and test the Server
 
 
