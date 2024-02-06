@@ -26,23 +26,15 @@ This configuration allows requests from https://localhost:7013, with any header 
 
 **Orleans Setup**:
 
-**Orleans**: A framework for building high-scale, distributed applications with a focus on simplicity and performance
+**Orleans**: A framework for building high-scale, distributed applications with a focus on simplicity and performance. It's often used for cloud services, gaming, and IoT solutions
 
-It's often used for cloud services, gaming, and IoT solutions
+**Clustering**: The application is configured to use localhost clustering, suitable for development and testing. This means the Orleans silo (a server node in the Orleans framework) will run on the local machine and can communicate with other silos if configured.
 
-**Clustering**: The application is configured to use localhost clustering, suitable for development and testing
-
-This means the Orleans silo (a server node in the Orleans framework) will run on the local machine and can communicate with other silos if configured.
-
-**Configuration**: It specifies the ClusterId and ServiceId, which are essential for identifying the cluster and services within Orleans
-
-This setup is crucial for the framework to manage grain (basic units of computation and state in Orleans) activations and requests efficiently
+**Configuration**: It specifies the ClusterId and ServiceId, which are essential for identifying the cluster and services within Orleans. This setup is crucial for the framework to manage grain (basic units of computation and state in Orleans) activations and requests efficiently
 
 **Logging**: Configures logging to the console, useful for development and debugging
 
-**Application Execution**:
-
-The application builds the host with the configured services and starts running, awaiting web requests and Orleans grain calls
+**Application Execution**: The application builds the host with the configured services and starts running, awaiting web requests and Orleans grain calls
 
 It includes exception handling to catch and log any unhandled exceptions that occur during the application's lifetime
 
@@ -145,23 +137,17 @@ catch (Exception ex)
 
 The code provides is a basic example of defining a **grain interface** in **Orleans**, a framework for building distributed applications in .NET. Orleans uses the concept of grains as the fundamental units of isolation, distribution, and persistence. A grain is a unit of computation and state that communicates with other grains and external clients via asynchronous messages
 
-The **IHello interface extends IGrainWithIntegerKey**, indicating that it is a grain interface where the grain instances are identified by integer keys
-
-This is a common pattern for grains that represent entities or services that can be uniquely identified by an integer
+The **IHello interface extends IGrainWithIntegerKey**, indicating that it is a grain interface where the grain instances are identified by integer keys. This is a common pattern for grains that represent entities or services that can be uniquely identified by an integer
 
 Here's a brief explanation of the components of the code:
 
 **namespace OrleansWebAPIServer.GrainsIntefaces**: This declares the namespace for the grain interface, which is a logical grouping of related code. This helps in organizing the codebase, especially in larger projects
 
-**public interface IHello IGrainWithIntegerKey**: This line defines the IHello interface, which inherits from IGrainWithIntegerKey
-
-The inheritance implies that any class implementing IHello will also need to implement the members of IGrainWithIntegerKey, which primarily includes an integer-based identifier for the grain
+**public interface IHello IGrainWithIntegerKey**: This line defines the IHello interface, which inherits from IGrainWithIntegerKey. The inheritance implies that any class implementing IHello will also need to implement the members of IGrainWithIntegerKey, which primarily includes an integer-based identifier for the grain
 
 **ValueTask<string> SayHello(string greeting);**: This line declares a method signature for SayHello, which is an asynchronous operation that accepts a string parameter named greeting and returns a ValueTask<string>
 
-ValueTask<T> is a value type used for optimizing small asynchronous operations
-
-It's a more efficient alternative to Task<T> in scenarios where the method may complete synchronously
+ValueTask<T> is a value type used for optimizing small asynchronous operations. It's a more efficient alternative to Task<T> in scenarios where the method may complete synchronously
 
 ```csharp
 ﻿using Orleans;
@@ -216,7 +202,6 @@ This logger is specific to the HelloGrain class, as indicated by the generic par
 
 The HelloGrain class has a constructor that takes an ILogger<HelloGrain> parameter
 
-his logger is provided via dependency injection when the grain is instantiated, enabling the class to log information
 
 **SayHello Method**:
 
@@ -446,13 +431,9 @@ The greeting parameter is appended to the query string of the request URL
 
 Instead of directly deserializing the JSON response into a HelloModel object using GetFromJsonAsync, the method uses GetStringAsync to fetch the response as a string
 
-**Response Handling**: Upon receiving the response, the method instantiates a HelloModel object and sets its Message property to the response string
+**Response Handling**: Upon receiving the response, the method instantiates a HelloModel object and sets its Message property to the response string. This object is then returned to the caller
 
-This object is then returned to the caller
-
-**HelloModel Class**: Although not defined in the provided code snippet, it's apparent that HelloModel is a model class with at least one property named Message
-
-This class is used to encapsulate the data returned by the hello service
+**HelloModel Class**: Although not defined in the provided code snippet, it's apparent that HelloModel is a model class with at least one property named Message. This class is used to encapsulate the data returned by the hello service
 
 This service could be used in a Blazor application to dynamically fetch and display a greeting message based on user input or other logic, showcasing an example of client-server communication in a modern web application using Blazor and potentially Orleans for distributed systems
 
@@ -491,6 +472,40 @@ namespace BlazorOrleansClient.Services
 ```
 
 ### 2.2. Configure the middleware (program.cs)
+
+This code snippet is a part of the startup process for a Blazor WebAssembly application
+
+It sets up the application's hosting environment, configures services, and starts the application. Here's a breakdown of its key components:
+
+**Namespace Imports**: The code begins by importing necessary namespaces:
+
+Microsoft.AspNetCore.Components.Web and Microsoft.AspNetCore.Components.WebAssembly.Hosting are essential for working with Blazor WebAssembly, including components and hosting features
+
+BlazorOrleansClient is likely the namespace of the main application, which includes the App component
+
+BlazorOrleansClient.Services contains application-specific services, such as the HelloService
+
+**WebAssemblyHostBuilder**:
+
+WebAssemblyHostBuilder.CreateDefault(args) creates an instance of WebAssemblyHostBuilder with default settings. This builder is used to configure the app's services, components, and other settings. The args parameter can include runtime arguments passed to the application
+
+**Root Components Registration**:
+
+builder.RootComponents.Add<App>("#app") registers the App component as a root component of the application and specifies that it should be attached to an HTML element with the ID app. This is typically the main component that serves as the entry point for the Blazor application
+
+builder.RootComponents.Add<HeadOutlet>("head::after") registers the HeadOutlet component for injecting elements into the HTML <head> tag, following the existing content.
+
+**Service Configuration**:
+
+builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) }) adds an HttpClient to the DI container with a scoped lifetime. It's configured with a BaseAddress taken from the host environment's base address. This HttpClient instance can be injected into components and services throughout the application, enabling them to make HTTP requests relative to the application's base URL
+
+builder.Services.AddScoped<HelloService>() adds the HelloService to the application's DI container with a scoped lifetime. This makes HelloService available for injection into components and other services, facilitating separation of concerns and reusability
+
+**Application Startup**:
+
+await builder.Build().RunAsync(); builds the application and starts it asynchronously. Build() finalizes the configuration and prepares the application for execution, while RunAsync() starts the application, beginning the event loop and enabling the app to handle user interactions and render UI updates
+
+In summary, this code is responsible for configuring and launching a Blazor WebAssembly application, setting up its environment, registering components, configuring services for dependency injection, and finally, starting the application to make it available to users
 
 ```csharp
 using Microsoft.AspNetCore.Components.Web;
