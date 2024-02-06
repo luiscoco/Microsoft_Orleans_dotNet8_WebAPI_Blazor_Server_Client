@@ -704,8 +704,22 @@ This is the **NavMenu.razor** whole code
 
 ## 3. Run and test the Server
 
+We run the serve application and we can access the Swagger API documentation
 
+https://localhost:7068/swagger/index.html
 
+![image](https://github.com/luiscoco/Microsoft_Orleans_dotNet8_WebAPI_Blazor_Server_Client/assets/32194879/01cabf5d-087e-414d-94bc-b8e4d0094f74)
 
 ## 4. Run and test the Client
+
+We run the client application 
+
+We click on the **Hello** menu option
+
+We input the greeting text in the input box
+
+We press the button to send the message to the Server
+
+The Server responds with the following message **Client said: '1234', so HelloGrain says: Hello!**
+![image](https://github.com/luiscoco/Microsoft_Orleans_dotNet8_WebAPI_Blazor_Server_Client/assets/32194879/21e1df0e-61f4-4ef8-8a36-c741f280dd15)
 
