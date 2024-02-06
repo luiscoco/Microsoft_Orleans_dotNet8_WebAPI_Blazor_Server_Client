@@ -420,6 +420,42 @@ namespace OrleansWebAPIServer.Controllers
 
 ### 2.1. Create the Services (HelloService.cs)
 
+This code snippet defines a HelloService class within a Blazor client application that interacts with an external service to retrieve a greeting message. 
+
+Here's a breakdown of its components and functionality:
+
+**Namespace and Imports**: The code uses namespaces and using directives to organize its structure and reference necessary .NET classes for HTTP communication and asynchronous programming
+
+It imports the System.Net.Http, System.Net.Http.Json, and System.Threading.Tasks namespaces for HTTP operations and asynchronous tasks
+
+The BlazorOrleansClient.Models namespace is also imported, which likely contains model classes used within the application, such as HelloModel
+
+**HelloService Class**: This is a service class designed to encapsulate the logic for making HTTP requests to an external service
+
+It demonstrates a common pattern in ASP.NET Core and Blazor applications where services are defined to handle specific pieces of business logic, in this case, saying hello
+
+**HttpClient Dependency Injection**: The class has a constructor that accepts an HttpClient instance as a dependency
+
+This HttpClient is injected at runtime by the Blazor application's dependency injection (DI) container
+
+The DI pattern is used here to provide the HelloService class with the necessary HttpClient instance for making HTTP requests without tightly coupling it to a specific HTTP client implementation
+
+**SayHello Method**: This asynchronous method SayHello takes a string parameter named greeting and uses the injected HttpClient to make a GET request to a predefined URL (https://localhost:7068/Hello)
+
+The greeting parameter is appended to the query string of the request URL
+
+Instead of directly deserializing the JSON response into a HelloModel object using GetFromJsonAsync, the method uses GetStringAsync to fetch the response as a string
+
+**Response Handling**: Upon receiving the response, the method instantiates a HelloModel object and sets its Message property to the response string
+
+This object is then returned to the caller
+
+**HelloModel Class**: Although not defined in the provided code snippet, it's apparent that HelloModel is a model class with at least one property named Message
+
+This class is used to encapsulate the data returned by the hello service
+
+This service could be used in a Blazor application to dynamically fetch and display a greeting message based on user input or other logic, showcasing an example of client-server communication in a modern web application using Blazor and potentially Orleans for distributed systems
+
 ```csharp
 ﻿using System.Net.Http;
 using System.Net.Http.Json;
