@@ -83,7 +83,89 @@ catch (Exception ex)
 }
 ```
 
-### 1.2. 
+### 1.2. Load the project dependencies
+
+```
+ <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.1" />
+<PackageReference Include="Microsoft.Orleans.Core" Version="8.0.0" />
+<PackageReference Include="Microsoft.Orleans.Core.Abstractions" Version="8.0.0" />
+<PackageReference Include="Microsoft.Orleans.Server" Version="8.0.0" />
+<PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+```
+
+### 1.3. Create the Grain Interfaces
+
+```csharp
+﻿using Orleans;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace OrleansWebAPIServer.GrainsIntefaces
+{
+    public interface IHello : IGrainWithIntegerKey
+    {
+        ValueTask<string> SayHello(string greeting);
+    }
+}
+```
+
+
+### 1.4. Create the Grains
+
+```csharp
+﻿using OrleansWebAPIServer.GrainsIntefaces;
+using Microsoft.Extensions.Logging;
+using Orleans;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace OrleansWebAPIServer.Grains
+{
+    public class HelloGrain : Grain, IHello
+    {
+        private readonly ILogger _logger;
+
+        public HelloGrain(ILogger<HelloGrain> logger)
+        {
+            _logger = logger;
+        }
+
+        public ValueTask<string> SayHello(string greeting)
+        {
+            _logger.LogInformation(
+            "SayHello message received: greeting = '{Greeting}'", greeting);
+
+            return ValueTask.FromResult(
+                $"""
+            Client said: '{greeting}', so HelloGrain says: Hello!
+            """);
+        }
+    }
+}
+```
+
+### 1.5. Create the Models
+
+```csharp
+
+```
+
+### 1.6. Create the Controllers
+
+```csharp
+
+```
+
+
+
+
+
 
 ## 2. Create the Client application (Blazor Web)
 
