@@ -543,9 +543,7 @@ A <button> is provided for sending the greeting, with an @onclick event handler 
 
 **Conditional Rendering**:
 
-The @if statement checks if helloMessage is not null. If true, it displays the message received from the HelloService within a paragraph (<p>)
-
-This demonstrates conditional rendering based on the state of the component
+The ```@if``` statement checks if helloMessage is not null. If true, it displays the message received from the HelloService within a paragraph ```<p>```. This demonstrates conditional rendering based on the state of the component
 
 **Code Block**:
 
