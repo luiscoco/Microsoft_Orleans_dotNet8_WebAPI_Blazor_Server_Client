@@ -525,6 +525,42 @@ await builder.Build().RunAsync();
 
 ### 2.3. Create a new page (Hello.razor)
 
+This code snippet is a Blazor component that provides a user interface for sending a greeting and receiving a response
+
+It showcases various Blazor concepts such as routing, dependency injection, data binding, event handling, and conditional rendering. Here's a breakdown of its key parts:
+
+**Routing with @page Directive**: The @page "/hello" directive at the top makes this component accessible via a specific URL path (/hello). This is how Blazor implements routing to different components within the application
+
+**Dependency Injection**: The @inject directive is used to inject a service (HelloService) from the BlazorOrleansClient.Services namespace into the component. This service is used to send the greeting to a backend and receive a response
+
+**User Interface**:
+
+The component displays a static heading (<h1>Say Hello</h1>)
+
+It includes an <input> element bound to a greeting variable, allowing the user to enter a greeting. The @bind directive creates a two-way binding between the input field and the greeting variable
+
+A <button> is provided for sending the greeting, with an @onclick event handler that triggers the GetGreeting method when clicked
+
+**Conditional Rendering**:
+
+The @if statement checks if helloMessage is not null. If true, it displays the message received from the HelloService within a paragraph (<p>)
+
+This demonstrates conditional rendering based on the state of the component
+
+**Code Block**:
+
+The @code block contains the C# logic for the component, defining variables for the user input (greeting) and the message received (helloMessage)
+
+The GetGreeting method is an asynchronous task that calls HelloService.SayHello(greeting) to fetch a greeting message. It updates helloMessage with the response, which is then displayed to the user
+
+Exception handling is implemented to catch and log different types of errors that may occur during the HTTP request or the JSON parsing process
+
+This includes handling for HttpRequestException, JsonException, and a generic Exception to cover other unexpected errors
+
+This component is an example of a simple interactive Blazor WebAssembly application feature
+
+It demonstrates how to interact with backend services, manage component state, and dynamically update the UI based on user input and asynchronous operations
+
 ```razor
 ﻿@page "/hello"
 @inject BlazorOrleansClient.Services.HelloService HelloService
