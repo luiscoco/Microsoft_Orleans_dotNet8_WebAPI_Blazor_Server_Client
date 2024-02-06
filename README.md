@@ -143,6 +143,26 @@ catch (Exception ex)
 
 ### 1.3. Create the Grain Interfaces (IHello.cs)
 
+The code provides is a basic example of defining a **grain interface** in **Orleans**, a framework for building distributed applications in .NET. Orleans uses the concept of grains as the fundamental units of isolation, distribution, and persistence. A grain is a unit of computation and state that communicates with other grains and external clients via asynchronous messages
+
+The **IHello interface extends IGrainWithIntegerKey**, indicating that it is a grain interface where the grain instances are identified by integer keys
+
+This is a common pattern for grains that represent entities or services that can be uniquely identified by an integer
+
+Here's a brief explanation of the components of the code:
+
+**namespace OrleansWebAPIServer.GrainsIntefaces**: This declares the namespace for the grain interface, which is a logical grouping of related code. This helps in organizing the codebase, especially in larger projects
+
+**public interface IHello IGrainWithIntegerKey**: This line defines the IHello interface, which inherits from IGrainWithIntegerKey
+
+The inheritance implies that any class implementing IHello will also need to implement the members of IGrainWithIntegerKey, which primarily includes an integer-based identifier for the grain
+
+**ValueTask<string> SayHello(string greeting);**: This line declares a method signature for SayHello, which is an asynchronous operation that accepts a string parameter named greeting and returns a ValueTask<string>
+
+ValueTask<T> is a value type used for optimizing small asynchronous operations
+
+It's a more efficient alternative to Task<T> in scenarios where the method may complete synchronously
+
 ```csharp
 ﻿using Orleans;
 using System;
