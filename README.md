@@ -605,6 +605,31 @@ It demonstrates how to interact with backend services, manage component state, a
 
 ### 2.4. Create Models (HelloModel.cs)
 
+
+This code snippet defines a simple model class named HelloModel within the BlazorOrleansClient.Models namespace
+
+This class is a part of a Blazor application that likely communicates with a backend service, possibly using Orleans, a framework for building distributed applications
+
+Here's a breakdown of its structure and purpose:
+
+**Namespace**: The BlazorOrleansClient.Models namespace suggests that this class is part of the Models directory or assembly in a Blazor project named BlazorOrleansClient. Namespaces help organize code and prevent naming conflicts.
+
+**Class Definition**: The HelloModel class is declared as public, meaning it can be accessed from other classes and assemblies
+
+This class serves as a data model, which is a common practice in MVC (Model-View-Controller) and similar patterns used in web and application development
+
+**Properties**:
+
+**public string Message { get; set; }**: This property is of type string and is named Message. It is auto-implemented with get and set accessors, allowing it to be read from and written to by other parts of the application
+
+This property is intended to store a message, likely a greeting or response fetched from a backend service or generated based on user input
+
+The purpose of the HelloModel class is to encapsulate data related to a greeting message
+
+In the context of a Blazor application, it could be used to transfer data between the frontend and a backend service, enabling dynamic content to be displayed to the user based on interactions or processes within the application
+
+This class follows the principle of keeping data models simple and focused on representing the structure of the data being handled
+
 ```csharp
 ﻿namespace BlazorOrleansClient.Models
 {
