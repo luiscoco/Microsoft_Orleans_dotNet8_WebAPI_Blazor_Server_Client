@@ -4,6 +4,52 @@
 
 ### 1.1. Configure the middleware (program.cs)
 
+This code snippet is a setup for a .NET Core application that integrates ASP.NET Core for web API functionality with Orleans, a cross-platform framework for building distributed applications
+
+It's structured to run an application host that combines web and Orleans services, configured for development and potentially production environments
+
+Here's a breakdown of its key components:
+
+**ASP.NET Core Setup**:
+
+Swagger: It configures Swagger, a tool used for documenting APIs
+
+This allows for easy testing and interaction with the web API by generating a user-friendly interface where users can see the endpoints, their requirements, and test them directly in the browser
+
+CORS (Cross-Origin Resource Sharing): It adds and configures CORS policy to specify how web applications running on one origin can access resources from a different origin, which is crucial for web security
+
+This configuration allows requests from https://localhost:7013, with any header and method
+
+MVC Controllers: It adds support for controllers, enabling the MVC (Model-View-Controller) pattern to be used for handling web requests
+
+Routing and Middleware: It sets up the application's request processing pipeline with routing, CORS, authorization, and endpoints for MVC controllers
+
+**Orleans Setup**:
+
+Orleans: A framework for building high-scale, distributed applications with a focus on simplicity and performance
+
+It's often used for cloud services, gaming, and IoT solutions
+
+Clustering: The application is configured to use localhost clustering, suitable for development and testing
+
+This means the Orleans silo (a server node in the Orleans framework) will run on the local machine and can communicate with other silos if configured.
+
+Configuration: It specifies the ClusterId and ServiceId, which are essential for identifying the cluster and services within Orleans
+
+This setup is crucial for the framework to manage grain (basic units of computation and state in Orleans) activations and requests efficiently
+
+Logging: Configures logging to the console, useful for development and debugging
+
+**Application Execution**:
+
+The application builds the host with the configured services and starts running, awaiting web requests and Orleans grain calls
+
+It includes exception handling to catch and log any unhandled exceptions that occur during the application's lifetime
+
+A console message prompts the user that the application is running and waits for an Enter key press to terminate, demonstrating a simple interaction for controlling the application's lifecycle
+
+This code is a comprehensive example of setting up a modern, distributed application using .NET Core's ASP.NET for web APIs and Orleans for distributed systems, showcasing middleware configuration, API documentation, cross-origin requests handling, and basic Orleans clustering and logging
+
 ```csharp
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
