@@ -1,0 +1,41 @@
+﻿@page "/hello"
+@inject BlazorOrleansClient.Services.HelloService HelloService
+<h1>Say Hello</h1>
+
+<div>
+    <input type="text" @bind="greeting" placeholder="Enter a greeting" />
+    <button @onclick="GetGreeting">Get Greeting</button>
+</div>
+
+@if (helloMessage != null)
+{
+    <p>@helloMessage.Message</p>
+}
+
+@code {
+    private string greeting;
+    private HelloModel helloMessage;
+
+    private async Task GetGreeting()
+    {
+        try
+        {
+            helloMessage = await HelloService.SayHello(greeting);
+        }
+        catch (System.Net.Http.HttpRequestException ex)
+        {
+            Console.WriteLine($"HTTPRequestException: {ex.Message}");
+            // Optionally, update the UI to reflect the error
+        }
+        catch (System.Text.Json.JsonException jsonEx)
+        {
+            Console.WriteLine($"JSON Parsing Error: {jsonEx.Message}");
+            // Optionally, update the UI to reflect the error
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"An unexpected error occurred: {ex.Message}");
+            // Optionally, update the UI to reflect the error
+        }
+    }
+}

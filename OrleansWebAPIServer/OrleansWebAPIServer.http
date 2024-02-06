@@ -1,0 +1,6 @@
+@OrleansWebAPIServer_HostAddress = http://localhost:5192
+
+GET {{OrleansWebAPIServer_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
