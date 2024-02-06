@@ -12,33 +12,33 @@ Here's a breakdown of its key components:
 
 **ASP.NET Core Setup**:
 
-Swagger: It configures Swagger, a tool used for documenting APIs
+**Swagger**: It configures Swagger, a tool used for documenting APIs
 
 This allows for easy testing and interaction with the web API by generating a user-friendly interface where users can see the endpoints, their requirements, and test them directly in the browser
 
-CORS (Cross-Origin Resource Sharing): It adds and configures CORS policy to specify how web applications running on one origin can access resources from a different origin, which is crucial for web security
+**CORS (Cross-Origin Resource Sharing)**: It adds and configures CORS policy to specify how web applications running on one origin can access resources from a different origin, which is crucial for web security
 
 This configuration allows requests from https://localhost:7013, with any header and method
 
-MVC Controllers: It adds support for controllers, enabling the MVC (Model-View-Controller) pattern to be used for handling web requests
+**MVC Controllers**: It adds support for controllers, enabling the MVC (Model-View-Controller) pattern to be used for handling web requests
 
-Routing and Middleware: It sets up the application's request processing pipeline with routing, CORS, authorization, and endpoints for MVC controllers
+**Routing and Middleware**: It sets up the application's request processing pipeline with routing, CORS, authorization, and endpoints for MVC controllers
 
 **Orleans Setup**:
 
-Orleans: A framework for building high-scale, distributed applications with a focus on simplicity and performance
+**Orleans**: A framework for building high-scale, distributed applications with a focus on simplicity and performance
 
 It's often used for cloud services, gaming, and IoT solutions
 
-Clustering: The application is configured to use localhost clustering, suitable for development and testing
+**Clustering**: The application is configured to use localhost clustering, suitable for development and testing
 
 This means the Orleans silo (a server node in the Orleans framework) will run on the local machine and can communicate with other silos if configured.
 
-Configuration: It specifies the ClusterId and ServiceId, which are essential for identifying the cluster and services within Orleans
+**Configuration**: It specifies the ClusterId and ServiceId, which are essential for identifying the cluster and services within Orleans
 
 This setup is crucial for the framework to manage grain (basic units of computation and state in Orleans) activations and requests efficiently
 
-Logging: Configures logging to the console, useful for development and debugging
+**Logging**: Configures logging to the console, useful for development and debugging
 
 **Application Execution**:
 
